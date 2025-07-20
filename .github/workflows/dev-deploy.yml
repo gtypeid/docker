@@ -1,0 +1,36 @@
+# .github/workflows/dev-deploy.yml
+
+name: dev-deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-to-docker-dev:
+    runs-on: [self-hosted]
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: built-jar
+          path: build/libs
+
+      - name: Build deploy image
+        run: |
+          docker build -f Dockerfile.deploy -t spring-app .
+
+      - name: Remove existing app container if exists
+        run: |
+          docker rm -f spring-app || true
+
+      - name: Run Spring app in docker-dev network
+        run: |
+          docker run -d \
+            --name spring-app \
+            --network docker-dev_default \
+            -p 8080:8080 \
+            spring-app
