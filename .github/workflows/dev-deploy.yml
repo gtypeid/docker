@@ -26,3 +26,6 @@ jobs:
             --network docker-dev_default \
             -p 8080:8080 \
             spring-app
+
+      - name: Remove dangling docker images
+        run: docker image prune -f
