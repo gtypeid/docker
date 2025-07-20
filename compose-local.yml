@@ -1,0 +1,20 @@
+name: docker
+services:
+
+  mariadb:
+    image: mariadb:11
+    environment:
+      MYSQL_ROOT_PASSWORD: 1q2w3e!Q@W#E
+      MYSQL_DATABASE: everypay
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./.local/mariadb/data:/var/lib/mysql
+
+networks:
+  local-infra:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.26.253.0/24
+          gateway: 172.26.253.1

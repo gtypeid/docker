@@ -1,0 +1,24 @@
+spring:
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      org.hibernate.envers:
+        track_entities_changed_in_revision: true
+  datasource:
+    url: jdbc:mariadb://localhost:3306/everypay
+    username: root
+    password: 1q2w3e!Q@W#E
+    driver-class-name: org.mariadb.jdbc.Driver
+
+logging:
+  level:
+    kr.or.bigs.cs.datasource: DEBUG
+    org.hibernate.sql: info
+    org.hibernate.type: info
+
+
+
+custom:
+  env: dev
