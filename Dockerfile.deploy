@@ -8,19 +8,11 @@ RUN apk add --no-cache tzdata curl
 USER 1000:1000
 WORKDIR /app
 
-# 빌드된 JAR 복사 (정확한 경로는 빌드 결과 보고 확인)
-COPY ./build/libs/*.jar /app/app.jar
+# 빌드된 JAR 복사 (경로가 맞는지 확인)
+COPY ./build/libs/docker-0.0.1-SNAPSHOT.jar /app/app.jar
 
 RUN mkdir logs
 
 EXPOSE 8080
 
-ENTRYPOINT [
-  "java",
-  "--add-opens", "java.base/java.util=ALL-UNNAMED",
-  "--add-opens", "java.base/java.lang=ALL-UNNAMED",
-  "-Djava.net.preferIPv4Stack=true",
-  "-Duser.timezone=Asia/Seoul",
-  "-Dspring.profiles.active=dev",
-  "-jar", "/app/app.jar"
-]
+ENTRYPOINT ["java", "--add-opens=java.base/java.util=ALL-UNNAMED", "--add-opens=java.base/java.lang=ALL-UNNAMED", "-Djava.net.preferIPv4Stack=true", "-Duser.timezone=Asia/Seoul", "-Dspring.profiles.active=dev", "-jar", "/app/app.jar"]
