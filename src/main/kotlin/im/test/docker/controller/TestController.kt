@@ -16,6 +16,6 @@ class TestController(
     fun test(): String {
         // test
         val counts = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM tenant", Long::class.java)
-        return "V123. Current Profile: $env / $counts"
+        return "V-124. Current Profile: $env / $counts"
     }
 }
