@@ -1,18 +1,11 @@
 # Dockerfile.deploy
-
 FROM amazoncorretto:21-alpine-jdk
-
 RUN mkdir -p /app && chown -R 1000:1000 /app
 RUN apk add --no-cache tzdata curl
-
 USER 1000:1000
 WORKDIR /app
-
 # 빌드된 JAR 복사 (경로가 맞는지 확인)
 COPY ./build/libs/docker-0.0.1-SNAPSHOT.jar /app/app.jar
-
 RUN mkdir logs
-
 EXPOSE 8080
-
 ENTRYPOINT ["java", "--add-opens=java.base/java.util=ALL-UNNAMED", "--add-opens=java.base/java.lang=ALL-UNNAMED", "-Djava.net.preferIPv4Stack=true", "-Duser.timezone=Asia/Seoul", "-Dspring.profiles.active=dev", "-jar", "/app/app.jar"]
