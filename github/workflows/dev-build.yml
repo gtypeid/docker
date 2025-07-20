@@ -1,0 +1,38 @@
+name: Build Spring App in Docker
+
+on:
+  workflow_dispatch:  # 수동 실행 버튼 활성화
+
+jobs:
+  build-in-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build my-app-builder image
+        run: |
+          docker build -f Dockerfile.build -t my-app-builder .
+
+      - name: Create temporary container from image
+        run: |
+          docker create --name temp-builder my-app-builder
+
+      - name: Copy JAR from container
+        run: |
+          mkdir -p build/libs
+          docker cp temp-builder:/app/build/libs/docker-0.0.1-SNAPSHOT.jar ./build/libs/
+
+      - name: Remove temp container
+        run: |
+          docker rm temp-builder
+
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: built-jar
+          path: build/libs/docker-0.0.1-SNAPSHOT.jar
