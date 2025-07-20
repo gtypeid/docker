@@ -1,4 +1,4 @@
-name: Build Spring App in Docker
+name: dev-build
 
 on:
   workflow_dispatch:  # 수동 실행 버튼 활성화
