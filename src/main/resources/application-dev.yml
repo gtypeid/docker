@@ -7,7 +7,7 @@ spring:
       org.hibernate.envers:
         track_entities_changed_in_revision: true
   datasource:
-    url: jdbc:mariadb://localhost:3306/everypay
+    url: jdbc:mariadb://mariadb:3306/everypay
     username: root
     password: 1q2w3e!Q@W#E
     driver-class-name: org.mariadb.jdbc.Driver
