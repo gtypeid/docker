@@ -14,6 +14,7 @@ class TestController(
 
     @GetMapping("/test")
     fun test(): String {
+        // test
         val counts = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM tenant", Long::class.java)
         return "Current Profile: $env / $counts"
     }
